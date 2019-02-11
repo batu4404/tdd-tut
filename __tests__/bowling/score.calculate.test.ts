@@ -114,3 +114,54 @@ describe('Calculate 10th frame score', () => {
     expect(frameRecord.calculateFrameScore(10)).toBe(26);
   });
 });
+
+describe('Calculate 9th frame score', () => {
+  test('Should calculate score for spared 9th frame with regular 10th frame correctly', () => {
+    let frameRecord = new FrameRecord();
+
+    let frame9 = new Frame(1, 9);
+    frameRecord.setFrame(9, frame9);
+
+    let frame10 = new Frame(0, 3);
+    frameRecord.setFrame(10, frame10);
+
+    expect(frameRecord.calculateFrameScore(9)).toBe(10);
+  });
+
+  test('Should calculate score for spared 9th frame with spared 10th frame correctly', () => {
+    let frameRecord = new FrameRecord();
+
+    let frame9 = new Frame(1, 9);
+    frameRecord.setFrame(9, frame9);
+
+    let frame10 = new Frame(9, 1, 10);
+    frameRecord.setFrame(10, frame10);
+
+    expect(frameRecord.calculateFrameScore(9)).toBe(19);
+  });
+
+  test('Should calculate score for spared 9th frame with striked 10th frame correctly', () => {
+    let frameRecord = new FrameRecord();
+
+    let frame9 = new Frame(1, 9);
+    frameRecord.setFrame(9, frame9);
+
+    let frame10 = new Frame(10, 10, 0);
+    frameRecord.setFrame(10, frame10);
+
+    expect(frameRecord.calculateFrameScore(9)).toBe(20);
+  });
+
+  test('Should calculate score for strike 9th frame with 10th frame (10, 10, 10) correctly', () => {
+    let frameRecord = new FrameRecord();
+
+    let frame9 = new Frame(10, 0);
+    frameRecord.setFrame(9, frame9);
+
+    let frame10 = new Frame(10, 10, 10);
+    frameRecord.setFrame(10, frame10);
+
+    expect(frameRecord.calculateFrameScore(9)).toBe(30);
+    expect(frameRecord.calculateFrameScore(10)).toBe(30);
+  });
+});

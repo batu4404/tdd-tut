@@ -32,6 +32,14 @@ class Frame {
   getFirstAttempt(): number {
     return this.attempts[0];
   }
+
+  getFirstExtraAttempt(): number {
+    if (this.attempts[0] === 10) {
+      return this.attempts[1];
+    } else {
+      return this.attempts[2];
+    }
+  }
 }
 
 export default Frame;

@@ -12,16 +12,13 @@ class FrameRecord {
   }
 
   calculateFrameScore(frameNth: number): number {
-    if (frameNth === 10) {
-      let frame = this.frames[frameNth];
+    let frame = this.frames[frameNth];
 
+    if (frameNth === 10) {
       return frame.getNumberOfSpins() + frame.getNumberOfExtraSpins();
     }
 
-    return (
-      this.frames[frameNth].getNumberOfSpins() +
-      this.calculateExtraScore(frameNth)
-    );
+    return frame.getNumberOfSpins() + this.calculateExtraScore(frameNth);
   }
 
   calculateExtraScore(frameNth: number): number {
@@ -38,6 +35,10 @@ class FrameRecord {
       let firstExtra = secondFrameSpins;
       let secondExtra =
         secondFrame && secondFrame.isStrike() ? thirdFrameSpins : 0;
+
+      if (frameNth === 9) {
+        secondExtra = secondFrame.getFirstExtraAttempt();
+      }
 
       return firstExtra + secondExtra;
     } else {
